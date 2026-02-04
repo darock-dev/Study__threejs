@@ -42,14 +42,15 @@ export default function example() {
   scene.add(mesh);
 
   // 렌더러가 렌더를 해줘야 화면에 보임
-  const clock = new THREE.Clock();  // 시간의 경과
+  let oldTime = Date.now();
+
   function draw() {
-    const time = clock.getElapsedTime();
-    // mesh.rotation.y += 0.1;
-    // mesh.rotation.y += THREE.MathUtils.degToRad(1); // 1도씩 회전
-    mesh.rotation.y = time * 2; // 시간에 비례해서 회전
-    // mesh.position.y += 0.01;
-    mesh.position.y = time * 2;
+    const newTime = Date.now();
+    const deltaTime = newTime - oldTime;
+    oldTime = newTime;
+
+    mesh.rotation.y += deltaTime * 0.002;
+    mesh.position.y += deltaTime * 0.001;
     if(mesh.position.y > 3) {
       mesh.position.y = 0;
     }

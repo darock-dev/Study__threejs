@@ -44,12 +44,9 @@ export default function example() {
   // 렌더러가 렌더를 해줘야 화면에 보임
   const clock = new THREE.Clock();  // 시간의 경과
   function draw() {
-    const time = clock.getElapsedTime();
-    // mesh.rotation.y += 0.1;
-    // mesh.rotation.y += THREE.MathUtils.degToRad(1); // 1도씩 회전
-    mesh.rotation.y = time * 2; // 시간에 비례해서 회전
-    // mesh.position.y += 0.01;
-    mesh.position.y = time * 2;
+    const delta = clock.getDelta();
+    mesh.rotation.y += 2 * delta; // 시간에 비례해서 회전
+    mesh.position.y += delta;
     if(mesh.position.y > 3) {
       mesh.position.y = 0;
     }
