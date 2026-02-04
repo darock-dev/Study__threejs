@@ -18,15 +18,32 @@ renderer.setSize(window.innerWidth, window.innerHeight); // 렌더러 크기 설
 const scene = new THREE.Scene(); // 씬 생성 
 
 // Camera
-const camera = new THREE.PerspectiveCamera(
-  75, // fov(시야각)
-  window.innerWidth / window.innerHeight, // aspect(종횡비)
+// - Perspective Camera (원근 카메라)
+// const camera = new THREE.PerspectiveCamera(
+//   75, // fov(시야각)
+//   window.innerWidth / window.innerHeight, // aspect(종횡비)
+//   0.1, // near
+//   1000 // far
+// );
+// camera.position.x = 1;
+// camera.position.y = 2;
+// camera.position.z = 5; // 카메라 z 위치 조정
+
+// - Orthographic Camera (직교 카메라)
+const camera = new THREE.OrthographicCamera(
+  -(window.innerWidth / window.innerHeight), // left
+  window.innerWidth / window.innerHeight, // right
+  1, // top
+  -1, // bottom
   0.1, // near
   1000 // far
-);
+)
 camera.position.x = 1;
 camera.position.y = 2;
-camera.position.z = 5; // 카메라 z 위치 조정
+camera.position.z = 5;
+camera.lookAt(0,0,0);
+camera.zoom = 0.5;
+camera.updateProjectionMatrix();
 scene.add(camera); // 씬에 카메라 추가
 
 // Mesh
