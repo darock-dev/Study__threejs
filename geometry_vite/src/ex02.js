@@ -49,6 +49,15 @@ export default function example() {
 	const mesh = new THREE.Mesh(geometry, material);
 	scene.add(mesh);
 
+	const positionArray = geometry.attributes.position.array;	// [x1, y1, z1, x2, y2, z2, ...]
+	for (let i = 0; i < positionArray.length; i+= 3) {
+		// 정점(Vertex) 한개의 x, y, z 좌표를 랜덤으로 조정
+		// Math.random(): 0 ~ 1 사이의 랜덤값
+		positionArray[i] = positionArray[i] + (Math.random() - 0.5) * 0.2;
+		positionArray[i+1] = positionArray[i+1] + (Math.random() - 0.5) * 0.2;
+		positionArray[i+2] = positionArray[i+2] + (Math.random() - 0.5) * 0.2;
+	}
+
 	
 
 	// 그리기
