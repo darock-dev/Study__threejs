@@ -8,7 +8,7 @@ export default function example() {
 	const canvas = document.querySelector('#three-canvas');
 	const renderer = new THREE.WebGLRenderer({
 		canvas,
-		antialias: true
+		antialias: true,
 	});
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
@@ -40,16 +40,17 @@ export default function example() {
 
 	// Mesh
 	const geometry = new THREE.SphereGeometry(5, 64, 64);
+	// const geometry = new THREE.PlaneGeometry(10, 10, 32, 32);
 	const material = new THREE.MeshStandardMaterial({
-		color: 'orangered',
+		color: 'seagreen',
 		side: THREE.DoubleSide,
 		flatShading: true
-	
 	});
 	const mesh = new THREE.Mesh(geometry, material);
 	scene.add(mesh);
 
 	const positionArray = geometry.attributes.position.array;	// [x1, y1, z1, x2, y2, z2, ...]
+	const randomArray = [];
 	// 처음의 위치를 세팅
 	for (let i = 0; i < positionArray.length; i+= 3) {
 		// 정점(Vertex) 한개의 x, y, z 좌표를 랜덤으로 조정
@@ -57,6 +58,10 @@ export default function example() {
 		positionArray[i] += (Math.random() - 0.5) * 0.2;
 		positionArray[i+1] +=  (Math.random() - 0.5) * 0.2;
 		positionArray[i+2] += (Math.random() - 0.5) * 0.2;
+
+		randomArray[i] = (Math.random() - 0.5) * 0.2;
+		randomArray[i+1] = (Math.random() - 0.5) * 0.2;
+		randomArray[i+2] = (Math.random() - 0.5) * 0.2;
 	}
 
 	
@@ -69,7 +74,9 @@ export default function example() {
 		const time = clock.getElapsedTime() * 3;	// 경과시간
 
 		for (let i = 0; i < positionArray.length; i+= 3) {
-			positionArray[i] += Math.sin(time) * 0.002;
+			positionArray[i] += Math.sin(time + randomArray[i] * 100) * 0.002;
+			positionArray[i+1] += Math.cos(time + randomArray[i+1] * 100) * 0.002;
+			positionArray[i+2] += Math.sin(time + randomArray[i+2] * 100) * 0.002;
 		}
 
 		geometry.attributes.position.needsUpdate = true;
